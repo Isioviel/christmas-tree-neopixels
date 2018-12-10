@@ -1,0 +1,68 @@
+4 pot pins
+4 button pins
+
+1 on off switch by USB - LED connected directly to it
+
+microUSB in - regulate power down to 3.3V for microbit
+			- send full 5V to neopixels
+
+			
+microUSB -- switch + LED -- neopixels -- microbit
+						 -- microbit  -- neopixels 	(pin0 + ground)
+									  -- R pot		(pin1 + ground + 3V)
+									  -- G pot		(pin2 + ground + 3V)
+									  -- B pot		(pin8 + ground + 3V)
+									  -- DIP		(pin12 + pin13 + pin14 + pin15 + ground)
+									  -- T pot		(pin16 + ground + 3V)
+
+RGB value taken from the three pots
+speed taken from pot
+
+0000	white solid
+1000	white flashing
+1100	white running
+1110	white random
+1111	white fading
+
+0100	multi flashing
+0110	multi running
+0111	multi random
+
+0001	multi choice solid
+0010	multi choice flashing
+0011	multi running
+1011	multi choice random
+1101	multi choice fading
+
+white solid = rgb(60,60,60) and stay put
+white flashing = random choice but all the same, keep changing
+white running = rgb(60,60,60) one at a time then (0,0,0) repeat
+white random = some on some off
+white fading = start at (0,0,0) go up to (60,60,60) then back down again
+
+multi flashing = random choice of rgb, keep changing
+multi running = choose randomly, turn on one at a time, then repeat
+multi random = some on, some off - choose randomly
+
+'''	
+def fading(r,g,b):		# either the pot values or 60,60,60
+	col = g, r, b
+	for i in range(0, 10):
+		count = 10
+		for pixel in range(0, len(np)):
+			col = g-count, r-count, b-count
+			np[pixel] = col
+			col = g, r, b
+		np.show()
+		sleep(t)
+		count -= 1
+	for i in range(0, 10):
+		count = 0
+		for pixel in range(0, len(np)):
+			col = g-count, r-count, b-count
+			np[pixel] = col
+			col = g, r, b
+		np.show()
+		sleep(t)
+		count += 1
+'''
