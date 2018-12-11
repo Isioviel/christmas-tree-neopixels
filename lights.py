@@ -4,6 +4,12 @@ from random import randint, choice
 
 np = neopixel.NeoPixel(pin0, 100)
 
+
+'''
+The following three functions control the rgb values of the lights.
+Either white, multicoloured, or random around a range chosen by three potentiometers.
+Note: the addressable LED string being used is GRB not RGB.
+'''
 def white():
     rand = randint(0, 60)
     col = (rand, rand, rand)
@@ -24,6 +30,11 @@ def chosen():
            randint(b-10, b+10))
     return col
 
+
+'''
+The following three functions control the pattern types.
+They take a colour function as an argument, and can use any of the colour types.
+'''
 def flashing(colour):
     t = 200  # TIME POT
     col = colour()
@@ -49,11 +60,20 @@ def random(colour):
     np.show()
     sleep(t)
 
+
+'''    
+The following two functions control additional pattern types.
+Instead of the colour functions, they take a specific r, g, b value as arguments.
+This can be 60, 60, 60 or the r, g, b chosen by three potentiometers.
+'''
 def solid(r, g, b):  # either the pot values or 60,60,60
     col = g, r, b
     for pixel in range(0, len(np)):
         np[pixel] = col
     np.show()
+
+# def fading(r, g, b):
+
 
 while True:
     running(multi)
