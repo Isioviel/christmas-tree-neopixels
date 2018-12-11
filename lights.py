@@ -4,6 +4,7 @@ from random import randint, choice
 
 np = neopixel.NeoPixel(pin0, 100)
 
+
 '''
 The following three functions control the rgb values of the lights.
 Either white, multicoloured, or random around a range chosen by three potentiometers.
@@ -59,6 +60,7 @@ def random(colour):
     np.show()
     sleep(t)
 
+
 '''    
 The following two functions control additional pattern types.
 Instead of the colour functions, they take a specific r, g, b value as arguments.
@@ -71,6 +73,7 @@ def solid(r, g, b):  # either the pot values or 60,60,60
     np.show()
 
 # def fading(r, g, b):
+
 
 while True:
     running(multi)
