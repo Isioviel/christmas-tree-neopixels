@@ -45,10 +45,10 @@ multi running = choose randomly, turn on one at a time, then repeat
 multi random = some on, some off - choose randomly
 
 '''	
-def fading(r,g,b):		# either the pot values or 60,60,60
+def fading(r, g, b, range_low, range_low):		# either the pot values or 60,60,60
 	col = g, r, b
-	for i in range(0, 10):
-		count = 10
+	for i in range(range_low, range_high):
+		count = range_low
 		for pixel in range(0, len(np)):
 			col = g-count, r-count, b-count
 			np[pixel] = col
