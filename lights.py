@@ -4,7 +4,7 @@ from microbit import pin12, pin13, pin14, pin15
 import neopixel
 from random import randint, choice
 
-np = neopixel.NeoPixel(pin8, 100)
+np = neopixel.NeoPixel(pin8, 122)
 display.off()
 
 # -------------------------------------------------------------------------------------------------------
