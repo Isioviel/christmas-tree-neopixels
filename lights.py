@@ -1,11 +1,11 @@
-from microbit import sleep, display
+from microbit import sleep, display, Image
 from microbit import pin0, pin1, pin2, pin3, pin8
 from microbit import pin12, pin13, pin14, pin15
 import neopixel
 from random import randint, choice
 
 np = neopixel.NeoPixel(pin8, 122)
-display.off()
+display.show(Image.XMAS)
 
 # -------------------------------------------------------------------------------------------------------
 # The below section converts the input from a potentiometer.
@@ -22,7 +22,7 @@ def convertInput(pot, converted_low, converted_high):
         return converted
     else:
         pass
-    
+
 def convertRGB():
     low = 10
     high = 50
@@ -30,7 +30,6 @@ def convertRGB():
     g = convertInput(pin2.read_analog(), low, high)
     b = convertInput(pin0.read_analog(), low, high)
     return g, r, b
-
 
 # -------------------------------------------------------------------------------------------------------
 # The below section controls the colours.
@@ -62,11 +61,15 @@ def plain_chosen():
     g, r, b = convertRGB()
     return g, r, b
 
+def ccc_colour():
+    pass
+
 
 # -------------------------------------------------------------------------------------------------------
 # The below section controls the pattern types.
 
 def flashing(g, r, b):
+    display.off()
     low = 100
     high = 1000
     for pixel in range(0, len(np)):
@@ -76,6 +79,7 @@ def flashing(g, r, b):
     sleep(t)
 
 def running(g, r, b):
+    display.off()
     low = 10
     high = 500
     for pixel in range(0, len(np)):
@@ -85,6 +89,7 @@ def running(g, r, b):
         sleep(t)
 
 def random(g, r, b):
+    display.off()
     low = 100
     high = 1000
     on_off = [(g, r, b), (0, 0, 0)]
@@ -95,31 +100,39 @@ def random(g, r, b):
     sleep(t)
 
 def solid(g, r, b):
+    display.on()
     for pixel in range(0, len(np)):
         np[pixel] = (g, r, b)
     np.show()
 
-# def fading(g, r, b):
+def fading(g, r, b):
+    display.off()
+    pass
 
-# def multi_switch(g, r, b):
+def ccc_pattern(g, r, b):
+    display.on()
+    pass
 
 
 # -------------------------------------------------------------------------------------------------------
 # The below section links the DIP switch to select modes.
 
 modes = {'0000': [solid, plain_white],
-         '1000': [flashing, white],
-         '1100': [running, white],
-         '1110': [random, white],
-         # '1111': [fading, white],
-         '0100': [flashing, multi],
-         '0110': [running, multi],
-         '0111': [random, multi],
-         '0001': [solid, plain_chosen],
-         '0010': [flashing, chosen],
-         '0011': [running, chosen],
-         '1011': [random, chosen],
-         # '1101': [fading, plain_chosen]
+         '0001': [flashing, white],
+         '0010': [running, white],
+         '0011': [random, white],
+         # '0100': [fading, white],
+         # '0101': [solid, random],
+         '0110': [flashing, multi],
+         '0111': [running, multi],
+         '1000': [random, multi],
+         # '1001': [fading, multi],
+         '1010': [solid, plain_chosen],
+         '1011': [flashing, chosen],
+         '1100': [running, chosen],
+         '1101': [random, chosen],
+         # '1110': [fading, chosen],
+         # '1111': [ccc_pattern, ccc_colour]
          }
 
 def dip():
@@ -136,6 +149,8 @@ def dip():
 
 while True:
     mode = dip()
+    if display.is_on():
+        display.show(Image.XMAS)
     try:
         g, r, b = modes.get(mode)[1]()
         modes.get(mode)[0](g, r, b)
